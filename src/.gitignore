@@ -1,0 +1,8 @@
+.idea/
+._.DS_Store
+.DS_Store
+vendor/
+._composer.phar
+composer.phar
+public/uploads
+/logs
