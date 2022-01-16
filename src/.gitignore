@@ -6,3 +6,4 @@ vendor/
 composer.phar
 public/uploads
 /logs
+phinx.yml

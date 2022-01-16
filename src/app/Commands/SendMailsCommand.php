@@ -20,9 +20,9 @@ class SendMailsCommand extends Command
     {
         $pendingMessage = Message::where('email_sent', false)->first();
         if( $pendingMessage) {
-            $transport = (new Swift_SmtpTransport(getenv('SMTP_HOST'), getenv('SMTP_PORT')))
-                ->setUsername(getenv('SMTP_USER'))
-                ->setPassword(getenv('SMTP_PASS'));
+            $transport = (new Swift_SmtpTransport($_SERVER['SMTP_HOST'], $_SERVER['SMTP_PORT']))
+                ->setUsername($_SERVER['SMTP_USER'])
+                ->setPassword($_SERVER['SMTP_PASS']);
 
             $mailer = new Swift_Mailer($transport);
 

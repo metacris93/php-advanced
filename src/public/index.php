@@ -9,7 +9,7 @@ require_once '../vendor/autoload.php';
 session_start();
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
+$dotenv->safeLoad();
 
 use App\Middlewares\AuthenticationMiddleware;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -27,17 +27,16 @@ $container = new DI\Container();
 
 $capsule = new Capsule;
 $capsule->addConnection([
-    'driver'    => getenv('DB_DRIVER'),
-    'host'      => getenv('DB_HOST'),
-    'database'  => getenv('DB_NAME'),
-    'username'  => getenv('DB_USER'),
-    'password'  => getenv('DB_PASS'),
+    'driver'    => $_SERVER['DB_DRIVER'],
+    'host'      => $_SERVER['DB_HOST'],
+    'database'  => $_SERVER['DB_NAME'],
+    'username'  => $_SERVER['DB_USER'],
+    'password'  => $_SERVER['DB_PASS'],
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
-    'port'      => getenv('DB_PORT')
+    'port'      => $_SERVER['DB_PORT']
 ]);
-
 // Make this Capsule instance available globally via static methods... (optional)
 $capsule->setAsGlobal();
 // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
@@ -123,7 +122,7 @@ $route = $matcher->match($request);
 try{
     $harmony = new Harmony($request, new Response());
     //->addMiddleware(new FastRouteMiddleware($router))
-    if (getenv('DEBUG') === "true") {
+    if ($_SERVER['DEBUG'] === "true") {
       $harmony->addMiddleware(new WhoopsMiddleware());
     }
     $harmony

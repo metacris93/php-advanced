@@ -1,8 +1,27 @@
 version: '3.8'
 services:
+  db:
+    image: mysql:8.0
+    container_name: db-container
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${SQL_DB}
+      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${SQL_PASSWORD}
+      - MYSQL_USER= ${SQL_USER}
+      - SERVICE_TAGS= dev
+      - SERVICE_NAME= mysql
+    volumes:
+      - php-advanced-data:/var/lib/mysql
+    networks:
+      - app-net
+    ports:
+      - ${SQL_PORT}:3306
+
   web:
     image: nginx:1.21.5-alpine
     container_name: nginx-container
+    restart: unless-stopped
     ports:
       - ${HTTP_PORT}:80
     volumes:
@@ -12,17 +31,30 @@ services:
       - app-net
     depends_on:
       - php
+      - db
 
   php:
-    image: php:7.4-fpm
+    build:
+      args:
+        user: ${USER_MACHINE}
+        uid: ${UID_MACHINE}
+        workdir: ${WORDK_DIR}
+      context: ./php
+      dockerfile: Dockerfile
     container_name: php-container
+    restart: unless-stopped
     volumes:
       - ${PROJECT_DIR}:${WORDK_DIR}
     expose:
       - 9000
     networks:
       - app-net
+    depends_on:
+      - db
 
 networks:
   app-net:
     driver: bridge
+
+volumes:
+  php-advanced-data:
