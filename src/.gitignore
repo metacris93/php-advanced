@@ -7,3 +7,5 @@ composer.phar
 public/uploads
 /logs
 phinx.yml
+/storage
+/public/data

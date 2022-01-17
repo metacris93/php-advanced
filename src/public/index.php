@@ -82,17 +82,21 @@ $map->post('saveJobs', '/admin/jobs/add', [
     \App\Controllers\JobsController::class,
     'getAddJobAction'
 ]);
-$map->get('addUser', '/admin/users/add', [
-    'App\Controllers\UsersController',
-    'getAddUser'
-]);
-$map->post('saveUser', '/admin/users/save', [
+// $map->get('addUser', '/admin/users/add', [
+//     'App\Controllers\UsersController',
+//     'getAddUser'
+// ]);
+$map->post('saveUser', '/users/save', [
     'App\Controllers\UsersController',
     'postSaveUser'
 ]);
 $map->get('loginForm', '/login', [
     'App\Controllers\AuthController',
     'getLogin'
+]);
+$map->get('register', '/register', [
+  'App\Controllers\UsersController',
+  'getAddUser'
 ]);
 $map->get('logout', '/logout', [
     'App\Controllers\AuthController',

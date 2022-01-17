@@ -2,13 +2,12 @@
 
 namespace App\Traits;
 
-
 trait HasDefaultImage
 {
-    public function getImage(string $altText) {
-        if (!$this->image) {
-            return "https://ui-avatars.com/api/?name=$altText&size=255";
-        }
-        return $this->image;
+  public function getImage() {
+    if (!$this->image) {
+        return "https://ui-avatars.com/api/?size=255";
     }
+    return $_ENV['APP_URL'].'data'.DIRECTORY_SEPARATOR.$this->image;
+  }
 }

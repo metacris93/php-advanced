@@ -6,11 +6,13 @@
       {{ responseMessage }}
     </div>
 
-    <form action="/jobs/add" method="post" enctype="multipart/form-data" >
+    <form action="/admin/jobs/add" method="post" enctype="multipart/form-data" >
         <label for="">Title:</label>
         <input type="text" name="title" ><br>
         <label for="">Description:</label>
         <input type="text" name="description"><br>
+        <label for="">Meses laborando:</label>
+        <input type="number" name="months"><br>
         <input type="file" name="logo"><br>
         <button type="submit">Save</button>
     </form>

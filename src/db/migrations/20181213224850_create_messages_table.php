@@ -30,15 +30,20 @@ class CreateMessagesTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function up()
     {
         $table = $this->table('messages');
         $table->addColumn('name', 'string')
             ->addColumn('mail', 'string')
             ->addColumn('message', 'string')
-            ->addColumn('email_sent', 'boolean')
-            ->addColumn('created_at', 'datetime')
-            ->addColumn('updated_at', 'datetime')
+            ->addColumn('email_sent', 'boolean', ['default' => false])
+            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'datetime', ['null' => true])
+            ->addColumn('deleted_at', 'datetime', ['null' => true])
             ->create();
+    }
+    public function down()
+    {
+      $this->table('messages')->drop()->save();
     }
 }

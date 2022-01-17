@@ -30,16 +30,21 @@ class CreatingJobsTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function up()
     {
         $table = $this->table('jobs');
         $table->addColumn('title', 'string')
             ->addColumn('description', 'text')
             ->addColumn('months', 'integer')
-            ->addColumn('image', 'string')
-            ->addColumn('created_at', 'datetime')
-            ->addColumn('updated_at', 'datetime')
-            ->addColumn('deleted_at', 'datetime')
+            ->addColumn('image', 'string', ['null' => true])
+            ->addColumn('uuid', 'uuid', ['null' => true])->addIndex('uuid', ['name' => 'idx_uuid'])
+            ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'datetime', ['null' => true])
+            ->addColumn('deleted_at', 'datetime', ['null' => true])
             ->create();
+    }
+    public function down()
+    {
+      $this->table('jobs')->drop()->save();
     }
 }

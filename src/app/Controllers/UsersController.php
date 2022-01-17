@@ -18,6 +18,6 @@ class UsersController extends BaseController {
         $user->email = $postData['email'];
         $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
         $user->save();
-        return $this->renderHTML('addUser.twig');
+        return $this->renderHTML('login.twig');
     }
 }
