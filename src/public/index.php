@@ -1,15 +1,14 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_starup_error', 1);
-error_reporting(E_ALL);
-
 require_once '../vendor/autoload.php';
-
 session_start();
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->safeLoad();
+
+if ($_SERVER['DEBUG'] === "true") {
+  ini_set('display_errors', 1);
+  ini_set('display_starup_error', 1);
+  error_reporting(E_ALL);
+}
 
 use App\Middlewares\AuthenticationMiddleware;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -131,6 +130,7 @@ try{
     }
     $harmony
       ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+      ->addMiddleware(new WhoopsMiddleware())
       ->addMiddleware(new Middlewares\AuraRouter($routerContainer))
       ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
       ->addMiddleware(new AuthenticationMiddleware())

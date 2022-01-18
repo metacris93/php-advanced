@@ -2,12 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Message;
-use App\Models\User;
-use Respect\Validation\Validator as v;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
-use Zend\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 
 class ContactController extends BaseController {
     public function indexAction() {
